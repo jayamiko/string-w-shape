@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>String Manipulation - W Shape</title>
+    <style>
+      .output-line {
+        white-space: pre;
+        font-family: monospace;
+        font-size: 20px;
+        line-height: 1.5;
+      }
+      .form-container {
+        margin-bottom: 20px;
+      }
+      input {
+        padding: 8px;
+        font-size: 16px;
+      }
+      button {
+        padding: 8px 16px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      p {
+        font-size: 18px;
+        color: #333;
+        font-family: Arial, sans-serif;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <input type="text" id="textInput" value="coderbyte" />
+      <button onclick="updateOutput()">Submit</button>
+    </div>
+
+    <div id="output"></div>
+
+    <p id="resultOutput"></p>
+
+    <script>
+      function manipulateString(input) {
+        const n = input.length;
+        let lines = ['', '', '']; // Three lines for the "W" shape
+
+        // Array to hold the reordered characters for final result
+        let resultArr = [];
+
+        // Loop through each character and distribute across the three lines
+        for (let i = 0; i < n; i++) {
+          if (i % 4 === 0) {
+            // Add character to the first line and the result array
+            lines[0] += input[i];
+            resultArr.push(input[i]); // Add character to result
+            lines[1] += ' ';
+            lines[2] += ' ';
+          } else if (i % 4 === 1 || i % 4 === 3) {
+            // Add character to the middle line and the result array
+            lines[0] += ' ';
+            lines[1] += input[i];
+            resultArr.push(input[i]); // Add character to result
+            lines[2] += ' ';
+          } else {
+            // Add character to the bottom line and the result array
+            lines[0] += ' ';
+            lines[1] += ' ';
+            lines[2] += input[i];
+            resultArr.push(input[i]); // Add character to result
+          }
+        }
+
+        // Display the formatted string in the browser
+        let outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = lines
+          .map((line) => `<div class="output-line">${line}</div>`)
+          .join('');
+
+        // Display the result string in the paragraph tag
+        document.getElementById('resultOutput').innerText =
+          'Result: ' + lines[0] + lines[1] + lines[2];
+
+        // Return the reordered string
+        return resultArr.join('');
+      }
+
+      function updateOutput() {
+        const textInput = document.getElementById('textInput').value;
+        manipulateString(textInput);
+      }
+
+      // Initial output on page load
+      document.addEventListener('DOMContentLoaded', function () {
+        manipulateString('');
+      });
+    </script>
+  </body>
+</html>
